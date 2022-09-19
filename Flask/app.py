@@ -2,6 +2,8 @@ import imp
 import json
 from flask import Flask, jsonify
 from flask_cors import CORS
+from config.db_connector import Database
+from api.testBoard import testBoard
  
 app = Flask(__name__)
 CORS(app) #Cross-Origin Resource Sharing) 모든 요청에 대해 cors를 적용한다는 의미
@@ -12,6 +14,8 @@ CORS(app) #Cross-Origin Resource Sharing) 모든 요청에 대해 cors를 적용
 #cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 #/api/로 들어오는 모든 요청에 대해서만 cors를 적용한다는 의미
 
+db_testBoard = testBoard()
+
 @app.route('/')
 def index():
     return 'Hello World'
@@ -20,7 +24,11 @@ def index():
 #@cross_origin() #해당 요청에 대해서만 cors를 적용한다는 의미
 def getBoardList():
     print('넘어옴')
-    data = {"result_code": "success", "result_data": "통신성공"}
+    
+    result = db_testBoard.getTestBoardList()
+
+    print(result)
+    data = {"result_code": "success", "result_data": result}
     return jsonify(data)    
 
 app.run(debug=True)

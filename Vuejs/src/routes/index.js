@@ -13,6 +13,7 @@ export default new Router({
             path:'/'
             ,name: HelloWorld
             ,component: HelloWorld
+            ,redirect: '/board/list'
         }
         ,{
             path: '/board/list'

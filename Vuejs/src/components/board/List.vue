@@ -16,18 +16,20 @@
 					<col width="15%" />
 				</colgroup>
 				<tr>
-					<th>no</th>
-					<th>제목</th>
-					<th>아이디</th>
-					<th>날짜</th>
+					<th colspan="1">no</th>
+					<th colspan="1">제목</th>
+					<th colspan="3">내용</th>
+					<th colspan="2">아이디</th>
+					<th colspan="2">날짜</th>
 				</tr>
-				<tr v-for="(row,idx) in list" :key="idx">
-					<td>{{no-idx}}</td>
-					<td class="txt_left"><a href="javascript:;" @click="fnView(`${row.num}`)">{{row.subject}}</a></td>
-					<td>{{row.id}}</td>
-					<td>{{row.regdate.substring(0,10)}}</td>
+				<tr v-for="(row,idx) in boardList" :key="idx">
+					<td colspan="1">{{no-idx}}</td>
+					<td colspan="1"><a href="javascript:;" @click="fnView(`${row.board_no}`)">{{row.subject}}</a></td>
+					<td colspan="3"><a href="javascript:;" @click="fnView(`${row.board_no}`)"></a>{{row.content}}</td>
+					<td colspan="2">{{row.reg_id}}</td>
+					<td colspan="2">{{row.reg_dt.substring(0,10)}}</td>
 				</tr>
-				<tr v-if="list.length == 0">
+				<tr v-if="boardList.length == 0">
 					<td colspan="4">데이터가 없습니다.</td>
 				</tr>
 			</table>
@@ -60,7 +62,7 @@ export default {
 		return{
 			body: ''
 			,board_code: 'news'
-			,list: ''
+			,boardList: ''
 			,no: '' 
 			,paging: ''
 			,start_page: ''
@@ -78,7 +80,7 @@ export default {
 		}
 	}
 	,mounted(){
-		this.fnGetList();
+		this.getList();
 	}
 	,methods:{
 		fnGetList(){
@@ -87,10 +89,10 @@ export default {
 				,keyword : this.keyword
 				,page : this.page
 			}
-			this.$axios.get('http://localhost:3000/api/board', {params:this.body})
+			this.$axios.get('http://127.0.0.1:5000/api/board', {params:this.body})
 			.then((res)=>{
 				if(res.data.success){
-					this.list = res.data.list;
+					this.boardList = res.data.result_data;
 					this.paging = res.data.paging;
 					this.no = this.paging.totalCount - ( (this.paging.page - 1) * this.paging.ipp );
 				}else{
@@ -102,19 +104,24 @@ export default {
 		}
 		,fnAdd(){
 			this.$router.push("./write");
-		}
-		,getList(){
-			this.$axios.get("http://localhost:3000/api/board")
-			.then((res =>{
-				console.log(res);
-			}))
-			.then((err =>{
-				console.log(err);
-			}))
-		}
+		}		
 		,fnSearch(){
 			this.paging.page = 1;
 			this.fnGetList();
+		}
+		,getList(){
+			this.$axios.get('http://127.0.0.1:5000/api/board/')
+			.then((res)=>{
+				if(res.data.result_code == 'success'){
+					console.log(res.data.result_data)
+					this.boardList = res.data.result_data;
+					alert("Flask서버와 통신성공")
+				}else{
+					alert("실행중 실패했습니다.\n다시 이용해 주세요.");
+				}
+			}).catch((err)=>{
+				console.log(err);
+			})
 		}
 		,fnPage(n){
 			if(this.page != n){
