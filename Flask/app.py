@@ -1,6 +1,6 @@
 import imp
 import json
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from config.db_connector import Database
 from api.testBoard import testBoard
@@ -23,11 +23,11 @@ def index():
 @app.route('/api/board/')
 #@cross_origin() #해당 요청에 대해서만 cors를 적용한다는 의미
 def getBoardList():
-    print('넘어옴')
     
+    request.data
+
     result = db_testBoard.getTestBoardList()
 
-    print(result)
     data = {"result_code": "success", "result_data": result}
     return jsonify(data)    
 

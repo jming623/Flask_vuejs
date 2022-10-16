@@ -2,20 +2,27 @@
 	<div>
 		<h2>게시판 리스트</h2>
 		
-		<div class="searchWrap">
-			<input type="text" v-model="keyword" @keyup.enter="fnSearch" />
-			<a href="javascript:;" @click="fnSearch" class="btnSearch btn">검색</a>
+		<div class="search-wrap">
+			<b-form-input type="text" class="search-input" v-model="keyword" @keyup.enter="fnSearch" />
+			<b-button variant="outline-primary" click="fnSearch" class="btn-search">검색</b-button>
 		</div>
 
-		<div class="listWrap">
-			<table class="tbList">
-				<colgroup>
+		<div class="list-wrap">
+			<b-table :items="boardList" :fields="tableField" class="tbList">
+				<!-- <template #cell(subject)="row">
+					<p @click="fnView(`${row.board_no}`)">{{row.subject}}</p>
+				</template> -->
+
+				<template #cell(reg_dt)="data">
+					{{data.item.reg_dt.substring(0,10)}}
+				</template>
+				<!-- <colgroup>
 					<col width="6%" />
 					<col width="*" />
 					<col width="10%" />
 					<col width="15%" />
-				</colgroup>
-				<tr>
+				</colgroup> -->
+				<!-- <tr>
 					<th colspan="1">no</th>
 					<th colspan="1">제목</th>
 					<th colspan="3">내용</th>
@@ -31,8 +38,8 @@
 				</tr>
 				<tr v-if="boardList.length == 0">
 					<td colspan="4">데이터가 없습니다.</td>
-				</tr>
-			</table>
+				</tr> -->
+			</b-table>
 		</div>
 
 		<div class="pagination" v-if="paging.totalCount > 0">
@@ -76,7 +83,14 @@ export default {
 					pageNumber.push(i);
 				}
 				return pageNumber;
-			}
+			},
+			tableField:[
+				{key: 'board_no', label:"글번호", sortable: true},
+				{key: 'subject', label:"제목", sortable: true},
+				{key: 'content', label:"내용", sortable: true},
+				{key: 'reg_id', label:"아이디", sortable: true},
+				{key: 'reg_dt', label:"날짜", sortable: true},
+			]
 		}
 	}
 	,mounted(){
@@ -106,8 +120,9 @@ export default {
 			this.$router.push("./write");
 		}		
 		,fnSearch(){
-			this.paging.page = 1;
-			this.fnGetList();
+			alert("검색")
+			//this.paging.page = 1;
+			//this.fnGetList();
 		}
 		,getList(){
 			this.$axios.get('http://127.0.0.1:5000/api/board/')
@@ -138,18 +153,3 @@ export default {
 	}
 }
 </script>
-
-<style scoped>
-	.searchWrap{border:1px solid #888; border-radius:5px; text-align:center; padding:20px 0; margin-bottom:40px;}
-	.searchWrap input{width:60%; height:36px; border-radius:3px; padding:0 10px; border:1px solid #888;}
-	.searchWrap .btnSearch{display:inline-block; margin-left:10px;}
-	.tbList th{border-top:1px solid #888;}
-	.tbList th, .tbList td{border-bottom:1px solid #eee; padding:5px 0;}
-	.tbList td.txt_left{text-align:left;}
-	.btnRightWrap{text-align:right; margin:10px 0 0 0;}
-
-	.pagination{margin:20px 0 0 0; text-align:center;}
-	.first, .prev, .next, .last{border:1px solid #666; margin:0 5px;}
-	.pagination span{display:inline-block; padding:0 5px; color:#333;}
-	.pagination a{text-decoration:none; display:inline-blcok; padding:0 5px; color:#666;}
-</style>

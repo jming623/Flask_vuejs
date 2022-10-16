@@ -1,0 +1,28 @@
+/* Common CSS*/
+html,body{padding:0; margin:0;}
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+h1{color:#43b984;}
+table{width:100%; border-collapse:collapse;}
+.wrap{width:100%;}
+.container{width:800px; margin:0 auto;}
+a{text-decoration:none;}
+.btn{padding:10px; background:#34445c; color:#fff;}
+
+/* Board CSS */
+.search-wrap{border:1px solid #888; border-radius:5px; text-align:center; padding:20px 0; margin-bottom:40px;}
+.search-wrap .search-input{width:60%; height:36px; display: inline-block; border-radius:3px; padding:0 10px; border:1px solid #888;}
+.search-wrap .btn-search{display:inline-block; margin-left:10px;}
+.tbList th{border-top:1px solid #888;}
+.tbList th, .tbList td{border-bottom:1px solid #eee; padding:5px 0;}
+.tbList td.txt_left{text-align:left;}
+.btnRightWrap{text-align:right; margin:10px 0 0 0;}
+.pagination{margin:20px 0 0 0; text-align:center;}
+.first, .prev, .next, .last{border:1px solid #666; margin:0 5px;}
+.pagination span{display:inline-block; padding:0 5px; color:#333;}
+.pagination a{text-decoration:none; display:inline-blcok; padding:0 5px; color:#666;}

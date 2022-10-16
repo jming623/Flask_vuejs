@@ -1,8 +1,26 @@
 <template>
-    <header>
-        <!-- 라우터 설정 전 -->
-        <!-- <h1><a href="#" class="logo"><img src="../../assets/logo.png" alt="Vue logo" width="80"></a></h1> -->
-        <!-- 라우터 설정 후 -->
+    <div>
+        <b-navbar toggleable="lg" type="dark" valiant="info">
+            <b-navbar-brand href="#">게시판</b-navbar-brand>
+
+            <b-navbar-toggle target="nav_collapse"/>
+
+            <b-collapse is-nav id="nav_collapse">
+                <b-navbar-nav>
+                    <b-navbar-item>게시판</b-navbar-item>
+                    <b-navbar-item>메뉴2</b-navbar-item>
+                    <b-navbar-item>메뉴3</b-navbar-item>
+                    <b-navbar-item>메뉴4</b-navbar-item>
+                </b-navbar-nav>
+            </b-collapse>
+        </b-navbar>
+    </div>
+    
+    
+    <!-- <header>
+        라우터 설정 
+        <h1><a href="#" class="logo"><img src="../../assets/logo.png" alt="Vue logo" width="80"></a></h1>
+        라우터 설정 후
         <h1><router-link to="/"><img src="../../assets/logo.png" alt="Vue logo" width="80"></router-link></h1>
         <div class="menuWrap">
             <ul class="menu">
@@ -12,7 +30,7 @@
 				<li><a href="javascript:;">메뉴4</a></li>
             </ul>
         </div>
-    </header>
+    </header> -->
 </template>
 
 <script>
